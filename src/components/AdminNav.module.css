@@ -1,0 +1,104 @@
+.nav {
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: var(--glass-blur);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-lg);
+    height: 64px;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    transition: color var(--transition-fast);
+}
+
+.logo:hover {
+    color: var(--primary);
+}
+
+.menu {
+    display: flex;
+    gap: var(--spacing-sm);
+    flex: 1;
+}
+
+.link {
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: var(--radius-md);
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 500;
+    transition: all var(--transition-fast);
+    white-space: nowrap;
+}
+
+.link:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--white);
+}
+
+.link.active {
+    background: var(--primary);
+    color: var(--white);
+}
+
+.actions {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+.viewSite {
+    padding: var(--spacing-xs) var(--spacing-md);
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: var(--radius-md);
+    color: var(--white);
+    font-weight: 500;
+    transition: all var(--transition-fast);
+}
+
+.viewSite:hover {
+    background: var(--primary);
+    border-color: var(--primary);
+    transform: translateY(-1px);
+}
+
+@media (max-width: 768px) {
+    .container {
+        flex-wrap: wrap;
+        height: auto;
+        padding: var(--spacing-sm);
+    }
+
+    .menu {
+        order: 3;
+        width: 100%;
+        flex-wrap: wrap;
+        gap: var(--spacing-xs);
+    }
+
+    .link {
+        font-size: 0.9rem;
+        padding: var(--spacing-xs) var(--spacing-sm);
+    }
+}

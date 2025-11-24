@@ -1,0 +1,56 @@
+.container {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.star {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 0;
+    transition: all 0.2s ease;
+    color: #ddd;
+}
+
+.interactive .star {
+    cursor: pointer;
+}
+
+.interactive .star:hover {
+    transform: scale(1.2);
+}
+
+.readOnly .star {
+    cursor: default;
+}
+
+.filled {
+    color: #ffd700;
+    text-shadow: 0 0 3px rgba(255, 215, 0, 0.5);
+}
+
+.empty {
+    color: #444;
+}
+
+.label {
+    margin-left: 8px;
+    font-size: 14px;
+    color: #666;
+    font-weight: 500;
+}
+
+/* Size variants */
+.small .star {
+    font-size: 16px;
+}
+
+.medium .star {
+    font-size: 24px;
+}
+
+.large .star {
+    font-size: 32px;
+}

@@ -1,0 +1,100 @@
+.card {
+    display: flex;
+    flex-direction: column;
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+    transition: all var(--transition-normal);
+}
+
+.card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.imageLink {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+}
+
+.image {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    transition: transform var(--transition-slow);
+}
+
+.card:hover .image {
+    transform: scale(1.1);
+}
+
+.placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(255, 69, 0, 0.1) 0%, rgba(255, 107, 53, 0.1) 100%);
+}
+
+.content {
+    padding: var(--spacing-md);
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.category {
+    color: var(--primary);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: var(--spacing-xs);
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.title {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    margin-bottom: var(--spacing-sm);
+    line-height: 1.3;
+    font-weight: 700;
+    transition: color var(--transition-fast);
+    color: var(--foreground);
+}
+
+.card:hover .title {
+    color: var(--primary);
+}
+
+.excerpt {
+    color: var(--muted);
+    font-size: clamp(0.85rem, 1.5vw, 0.9rem);
+    margin-bottom: var(--spacing-sm);
+    line-height: 1.6;
+    flex-grow: 1;
+}
+
+.date {
+    font-size: 0.75rem;
+    color: var(--muted);
+    opacity: 0.7;
+}
+
+@media (max-width: 768px) {
+    .content {
+        padding: var(--spacing-sm);
+    }
+
+    .card {
+        border-radius: var(--radius-md);
+    }
+}

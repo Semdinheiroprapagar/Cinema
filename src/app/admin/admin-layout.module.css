@@ -1,0 +1,15 @@
+.layout {
+    min-height: 100vh;
+    background: var(--background);
+}
+
+.main {
+    padding-top: var(--spacing-lg);
+    padding-bottom: var(--spacing-xl);
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+}

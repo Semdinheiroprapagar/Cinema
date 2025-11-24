@@ -1,0 +1,298 @@
+.container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.createButton {
+    background: var(--primary);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    font-weight: 600;
+    transition: opacity 0.2s;
+}
+
+.createButton:hover {
+    opacity: 0.9;
+}
+
+.tableContainer {
+    background: var(--secondary);
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    overflow-x: auto;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.table th,
+.table td {
+    padding: 1rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.table th {
+    background: rgba(255, 255, 255, 0.05);
+    font-weight: 600;
+    color: var(--muted);
+}
+
+.table tr:last-child td {
+    border-bottom: none;
+}
+
+.published {
+    color: #4caf50;
+    background: rgba(76, 175, 80, 0.1);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+}
+
+.draft {
+    color: #ff9800;
+    background: rgba(255, 152, 0, 0.1);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+}
+
+.actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.editBtn {
+    color: var(--foreground);
+    padding: 0.25rem 0.5rem;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.deleteBtn {
+    color: #ff4545;
+    padding: 0.25rem 0.5rem;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.editBtn:hover,
+.deleteBtn:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.empty {
+    text-align: center;
+    color: var(--muted);
+    padding: 3rem;
+}
+
+/* New layout and UI utility classes */
+.dashboard {
+    padding: 2rem;
+    background: var(--background);
+}
+
+.title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--foreground);
+}
+
+.subtitle {
+    font-size: 1rem;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+}
+
+.filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.filterBtn {
+    background: var(--secondary);
+    color: var(--foreground);
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+
+.filterBtn:hover {
+    background: var(--primary);
+    color: white;
+}
+
+.active {
+    background: var(--primary);
+    color: white;
+}
+
+.titleCell {
+    max-width: 250px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.postTitle {
+    color: var(--foreground);
+    text-decoration: none;
+}
+
+.postTitle:hover {
+    text-decoration: underline;
+}
+
+.categoryBadge {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+}
+
+.typeBadge {
+    background: rgba(0, 0, 0, 0.1);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+}
+
+.dateCell {
+    white-space: nowrap;
+}
+
+.actionsCell {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.loading {
+    text-align: center;
+    padding: 3rem;
+    color: var(--muted);
+}
+
+/* Form Styles */
+.form {
+    background: var(--secondary);
+    padding: 2rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.field {
+    margin-bottom: 1.5rem;
+}
+
+.field label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--muted);
+}
+
+.field input,
+.field textarea,
+.field select {
+    width: 100%;
+    padding: 0.75rem;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    background: var(--background);
+    color: var(--foreground);
+    font-family: inherit;
+    font-size: 1rem;
+}
+
+.field textarea {
+    min-height: 200px;
+    resize: vertical;
+}
+
+.field input:focus,
+.field textarea:focus,
+.field select:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.checkbox {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.checkbox input {
+    width: auto;
+}
+
+.formActions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.cancelBtn {
+    padding: 0.75rem 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--foreground);
+}
+
+.saveBtn {
+    padding: 0.75rem 1.5rem;
+    background: var(--primary);
+    color: white;
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+.secondaryButton {
+    background: #555;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    font-weight: 600;
+    transition: opacity 0.2s;
+}
+
+.secondaryButton:hover {
+    opacity: 0.9;
+}
+
+.categoryBtn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.categoryBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}

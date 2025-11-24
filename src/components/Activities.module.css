@@ -1,0 +1,101 @@
+.container {
+    padding: var(--spacing-xl) var(--spacing-sm);
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.heading {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    margin-bottom: var(--spacing-lg);
+    border-left: 5px solid var(--primary);
+    padding-left: var(--spacing-md);
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--foreground) 0%, var(--primary-light) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--spacing-lg);
+}
+
+.card {
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+    transition: all var(--transition-normal);
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.image {
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    transition: transform var(--transition-slow);
+}
+
+.card:hover .image {
+    transform: scale(1.1);
+}
+
+.content {
+    padding: var(--spacing-md);
+}
+
+.title {
+    font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+    margin-bottom: var(--spacing-sm);
+    color: white;
+    font-weight: 700;
+}
+
+.description {
+    color: var(--muted);
+    margin-bottom: var(--spacing-md);
+    line-height: 1.6;
+    font-size: clamp(0.875rem, 1.5vw, 1rem);
+}
+
+.link {
+    display: inline-block;
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 700;
+    padding: var(--spacing-xs) var(--spacing-md);
+    background: linear-gradient(135deg, rgba(255, 69, 0, 0.1) 0%, rgba(255, 107, 53, 0.1) 100%);
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+}
+
+.link:hover {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    color: white;
+    transform: translateX(4px);
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: var(--spacing-md) var(--spacing-sm);
+    }
+
+    .grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+    }
+
+    .card {
+        border-radius: var(--radius-md);
+    }
+}

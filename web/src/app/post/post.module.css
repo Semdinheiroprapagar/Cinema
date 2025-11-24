@@ -1,0 +1,100 @@
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.category {
+    color: var(--primary);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.875rem;
+    letter-spacing: 0.05em;
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.title {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.1;
+}
+
+@media (min-width: 768px) {
+    .title {
+        font-size: 3.5rem;
+    }
+}
+
+.excerpt {
+    font-size: 1.25rem;
+    color: var(--muted);
+    line-height: 1.6;
+    max-width: 600px;
+    margin: 0 auto 1.5rem;
+}
+
+.meta {
+    color: var(--muted);
+    font-size: 0.9rem;
+}
+
+.coverImage {
+    margin-bottom: 3rem;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.coverImage img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.content {
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: var(--foreground);
+}
+
+.content p {
+    margin-bottom: 1.5rem;
+}
+
+.content h2 {
+    font-size: 2rem;
+    margin: 3rem 0 1.5rem;
+}
+
+.content h3 {
+    font-size: 1.5rem;
+    margin: 2rem 0 1rem;
+}
+
+.content ul,
+.content ol {
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+}
+
+.content li {
+    margin-bottom: 0.5rem;
+}
+
+.content a {
+    color: var(--primary);
+    text-decoration: underline;
+}
+
+.content blockquote {
+    border-left: 4px solid var(--primary);
+    padding-left: 1.5rem;
+    margin: 2rem 0;
+    font-style: italic;
+    color: var(--muted);
+}
