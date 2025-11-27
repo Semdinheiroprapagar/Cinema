@@ -17,10 +17,12 @@ async function getPostsByCategory(categorySlug: string) {
     // Map slug to category name (e.g., 'criticas' -> 'Críticas')
     const categoryMap: Record<string, string> = {
         'criticas': 'Críticas',
-        'artigos': 'Artigos',
+        'listas': 'Listas',
+        'artigos': 'Listas', // Backward compatibility
         'videos': 'Vídeos',
         'festivais': 'Festivais',
-        'temas': 'Temas'
+        'curiosidades': 'Curiosidades',
+        'temas': 'Curiosidades' // Backward compatibility
     };
 
     const categoryName = categoryMap[categorySlug.toLowerCase()];

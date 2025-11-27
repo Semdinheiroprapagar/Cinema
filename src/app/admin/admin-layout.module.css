@@ -13,3 +13,25 @@
     margin: 0 auto;
     padding: 0 var(--spacing-md);
 }
+
+@media (max-width: 768px) {
+    .main {
+        padding-top: var(--spacing-md);
+        padding-bottom: var(--spacing-lg);
+    }
+
+    .container {
+        padding: 0 var(--spacing-sm);
+    }
+}
+
+@media (max-width: 480px) {
+    .main {
+        padding-top: var(--spacing-sm);
+        padding-bottom: var(--spacing-md);
+    }
+
+    .container {
+        padding: 0 var(--spacing-xs);
+    }
+}

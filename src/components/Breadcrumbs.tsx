@@ -23,10 +23,12 @@ export default function Breadcrumbs() {
         else if (segment === 'banners') label = 'Banners';
         else if (segment === 'activities') label = 'Atividades';
         else if (segment === 'criticas') label = 'Críticas';
-        else if (segment === 'artigos') label = 'Artigos';
+        else if (segment === 'listas') label = 'Listas';
+        else if (segment === 'artigos') label = 'Listas'; // Backward compatibility
         else if (segment === 'videos') label = 'Vídeos';
         else if (segment === 'festivais') label = 'Festivais';
-        else if (segment === 'temas') label = 'Temas';
+        else if (segment === 'curiosidades') label = 'Curiosidades';
+        else if (segment === 'temas') label = 'Curiosidades'; // Backward compatibility
         else if (!isNaN(Number(segment))) label = `#${segment}`;
 
         return { path, label };

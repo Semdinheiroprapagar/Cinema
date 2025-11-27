@@ -4,54 +4,50 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import styles from './Carousel.module.css';
 
-interface Banner {
+interface Post {
     id: number;
+    slug: string;
     title: string;
-    image_url: string;
-    link: string;
+    cover_image: string;
+    excerpt: string;
 }
 
-export default function Carousel() {
-    const [banners, setBanners] = useState<Banner[]>([]);
+interface CarouselProps {
+    posts: Post[];
+}
+
+export default function Carousel({ posts }: CarouselProps) {
     const [currentIndex, setCurrentIndex] = useState(0);
 
     useEffect(() => {
-        fetch('/api/banners')
-            .then((res) => res.json())
-            .then((data) => setBanners(data))
-            .catch((err) => console.error('Failed to fetch banners', err));
-    }, []);
-
-    useEffect(() => {
-        if (banners.length === 0) return;
+        if (posts.length === 0) return;
         const interval = setInterval(() => {
-            setCurrentIndex((prev) => (prev + 1) % banners.length);
+            setCurrentIndex((prev) => (prev + 1) % posts.length);
         }, 5000);
         return () => clearInterval(interval);
-    }, [banners.length]);
+    }, [posts.length]);
 
-    if (banners.length === 0) return null;
+    if (posts.length === 0) return null;
 
     return (
         <div className={styles.carousel}>
-            {banners.map((banner, index) => (
+            {posts.map((post, index) => (
                 <div
-                    key={banner.id}
+                    key={post.id}
                     className={`${styles.slide} ${index === currentIndex ? styles.active : ''}`}
-                    style={{ backgroundImage: `url(${banner.image_url})` }}
+                    style={{ backgroundImage: `url(${post.cover_image})` }}
                 >
                     <div className={styles.content}>
-                        <h2>{banner.title}</h2>
-                        {banner.link && (
-                            <Link href={banner.link} className={styles.button}>
-                                Saiba Mais
-                            </Link>
-                        )}
+                        <h2>{post.title}</h2>
+                        <p>{post.excerpt}</p>
+                        <Link href={`/post/${post.slug}`} className={styles.button}>
+                            Leia Mais
+                        </Link>
                     </div>
                 </div>
             ))}
             <div className={styles.dots}>
-                {banners.map((_, index) => (
+                {posts.map((_, index) => (
                     <button
                         key={index}
                         className={`${styles.dot} ${index === currentIndex ? styles.activeDot : ''}`}

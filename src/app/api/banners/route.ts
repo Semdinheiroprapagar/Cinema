@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import db from '@/lib/db';
 
 export async function GET() {
@@ -19,6 +20,7 @@ export async function POST(request: Request) {
         const stmt = db.prepare('INSERT INTO banners (title, image_url, link) VALUES (?, ?, ?)');
         const result = stmt.run(title, image_url, link);
 
+        revalidatePath('/');
         return NextResponse.json({ id: result.lastInsertRowid, title, image_url, link }, { status: 201 });
     } catch (error) {
         return NextResponse.json({ error: 'Failed to create banner' }, { status: 500 });
@@ -37,6 +39,7 @@ export async function DELETE(request: Request) {
         const stmt = db.prepare('DELETE FROM banners WHERE id = ?');
         stmt.run(id);
 
+        revalidatePath('/');
         return NextResponse.json({ success: true });
     } catch (error) {
         return NextResponse.json({ error: 'Failed to delete banner' }, { status: 500 });

@@ -83,22 +83,94 @@
     transform: translateY(-1px);
 }
 
+.hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    z-index: 101;
+}
+
+.hamburger span {
+    width: 24px;
+    height: 2px;
+    background: var(--white);
+    transition: all var(--transition-fast);
+    border-radius: 2px;
+}
+
+.hamburger span.hamburgerOpen:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.hamburger span.hamburgerOpen:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger span.hamburgerOpen:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -6px);
+}
+
 @media (max-width: 768px) {
     .container {
-        flex-wrap: wrap;
-        height: auto;
-        padding: var(--spacing-sm);
+        height: 64px;
+        padding: var(--spacing-sm) var(--spacing-md);
+    }
+
+    .hamburger {
+        display: flex;
     }
 
     .menu {
-        order: 3;
-        width: 100%;
-        flex-wrap: wrap;
-        gap: var(--spacing-xs);
+        position: fixed;
+        top: 64px;
+        left: 0;
+        right: 0;
+        background: rgba(0, 0, 0, 0.98);
+        backdrop-filter: var(--glass-blur);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        flex-direction: column;
+        gap: 0;
+        padding: var(--spacing-md) 0;
+        transform: translateY(-100%);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        z-index: 99;
+    }
+
+    .menu.menuOpen {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
     }
 
     .link {
-        font-size: 0.9rem;
+        font-size: 1rem;
+        padding: var(--spacing-md) var(--spacing-lg);
+        border-radius: 0;
+        width: 100%;
+        text-align: left;
+    }
+
+    .link:hover {
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    .link.active {
+        background: rgba(var(--primary-rgb, 139, 92, 246), 0.2);
+        border-left: 3px solid var(--primary);
+    }
+
+    .actions {
+        margin-left: auto;
+    }
+
+    .viewSite {
         padding: var(--spacing-xs) var(--spacing-sm);
+        font-size: 0.9rem;
     }
 }

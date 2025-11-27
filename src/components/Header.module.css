@@ -134,10 +134,20 @@
         flex-direction: row;
         justify-content: space-between;
         gap: var(--spacing-md);
+        width: 100%;
+    }
+
+    .nav {
+        flex: 1;
+        justify-content: space-evenly;
+        gap: 0;
+        margin-left: var(--spacing-xl);
+        flex-wrap: nowrap;
     }
 
     .logo {
         font-size: 2rem;
+        flex-shrink: 0;
     }
 
     .topBar {

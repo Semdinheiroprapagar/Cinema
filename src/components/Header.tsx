@@ -48,12 +48,11 @@ export default function Header() {
           {/* Navigation Menu */}
           <nav className={`${styles.nav} ${isMenuOpen ? styles.navOpen : ''}`}>
             <Link href="/category/criticas" onClick={closeMenu}>Críticas</Link>
-            <Link href="/category/artigos" onClick={closeMenu}>Artigos</Link>
+            <Link href="/category/listas" onClick={closeMenu}>Listas</Link>
+            <Link href="/category/curiosidades" onClick={closeMenu}>Curiosidades</Link>
             <Link href="/category/videos" onClick={closeMenu}>Vídeos</Link>
             <Link href="/category/festivais" onClick={closeMenu}>Festivais</Link>
-            <Link href="/category/temas" onClick={closeMenu}>Temas</Link>
             <Link href="/about" onClick={closeMenu}>Quem Sou</Link>
-            <Link href="/contact" onClick={closeMenu}>Contato</Link>
           </nav>
         </div>
       </div>

@@ -3,7 +3,7 @@ import type { NextRequest } from 'next/server';
 import { decrypt } from '@/lib/auth';
 import { cookies } from 'next/headers';
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
     const path = request.nextUrl.pathname;
 
     if (path.startsWith('/admin')) {

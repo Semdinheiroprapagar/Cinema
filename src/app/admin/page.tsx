@@ -78,10 +78,16 @@ export default function AdminDashboard() {
                     📽️ Críticas ({posts.filter(p => p.category === 'Críticas').length})
                 </button>
                 <button
-                    className={`${styles.filterBtn} ${filter === 'Artigos' ? styles.active : ''}`}
-                    onClick={() => setFilter('Artigos')}
+                    className={`${styles.filterBtn} ${filter === 'Listas' ? styles.active : ''}`}
+                    onClick={() => setFilter('Listas')}
                 >
-                    📝 Artigos ({posts.filter(p => p.category === 'Artigos').length})
+                    📋 Listas ({posts.filter(p => p.category === 'Listas').length})
+                </button>
+                <button
+                    className={`${styles.filterBtn} ${filter === 'Curiosidades' ? styles.active : ''}`}
+                    onClick={() => setFilter('Curiosidades')}
+                >
+                    💡 Curiosidades ({posts.filter(p => p.category === 'Curiosidades').length})
                 </button>
                 <button
                     className={`${styles.filterBtn} ${filter === 'Vídeos' ? styles.active : ''}`}
@@ -94,12 +100,6 @@ export default function AdminDashboard() {
                     onClick={() => setFilter('Festivais')}
                 >
                     🎪 Festivais ({posts.filter(p => p.category === 'Festivais').length})
-                </button>
-                <button
-                    className={`${styles.filterBtn} ${filter === 'Temas' ? styles.active : ''}`}
-                    onClick={() => setFilter('Temas')}
-                >
-                    💭 Temas ({posts.filter(p => p.category === 'Temas').length})
                 </button>
             </div>
 

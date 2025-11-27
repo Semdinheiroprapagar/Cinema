@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Meio Amargo - Cinema e Séries",
-  description: "Críticas, artigos, vídeos e entrevistas de cinema e séries.",
+  description: "Críticas, listas, vídeos e entrevistas de cinema e séries.",
 };
 
 export default function RootLayout({
@@ -24,7 +24,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body className={`${geistSans.variable} ${geistMono.variable}`} suppressHydrationWarning>
         {children}
       </body>
     </html>

@@ -16,16 +16,16 @@ async function getPosts() {
 
 export default async function Home() {
   const posts = await getPosts();
-  const heroPost = posts[0];
-  const otherPosts = posts.slice(1);
+  const bannerPosts = posts.slice(0, 3); // First 3 posts for carousel
+  const gridPosts = posts.slice(3); // Remaining posts for grid
 
   return (
     <div className={styles.container}>
-      <Carousel />
+      <Carousel posts={bannerPosts} />
       <Activities />
 
       <section className={styles.grid}>
-        {otherPosts.map((post) => (
+        {gridPosts.map((post) => (
           <PostCard key={post.id} post={post} />
         ))}
       </section>

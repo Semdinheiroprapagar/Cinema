@@ -8,7 +8,7 @@ export default function Footer() {
             <div className={styles.container}>
                 <div className={styles.content}>
                     <div className={styles.brand}>
-                        <h3 className={styles.brandName}>MEIO AMARGO</h3>
+
                         <p className={styles.tagline}>Cinema, crítica e cultura</p>
                     </div>
 
@@ -42,10 +42,10 @@ export default function Footer() {
                         <h4 className={styles.linksTitle}>Navegação</h4>
                         <nav className={styles.nav}>
                             <Link href="/category/criticas">Críticas</Link>
-                            <Link href="/category/artigos">Artigos</Link>
+                            <Link href="/category/listas">Listas</Link>
+                            <Link href="/category/curiosidades">Curiosidades</Link>
                             <Link href="/category/videos">Vídeos</Link>
                             <Link href="/category/festivais">Festivais</Link>
-                            <Link href="/category/temas">Temas</Link>
                         </nav>
                     </div>
                 </div>

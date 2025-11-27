@@ -88,10 +88,10 @@ export default function PostForm({ initialData, onSubmit, isEditing }: PostFormP
                         onChange={handleChange}
                     >
                         <option value="Críticas">Críticas</option>
-                        <option value="Artigos">Artigos</option>
+                        <option value="Listas">Listas</option>
+                        <option value="Curiosidades">Curiosidades</option>
                         <option value="Vídeos">Vídeos</option>
                         <option value="Festivais">Festivais</option>
-                        <option value="Temas">Temas</option>
                     </select>
                 </div>
 

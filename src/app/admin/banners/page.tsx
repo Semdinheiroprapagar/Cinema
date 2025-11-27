@@ -1,196 +1,173 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import ImageUpload from '@/components/ImageUpload';
+import Link from 'next/link';
+import styles from '../admin.module.css';
 
-interface Banner {
+interface Post {
     id: number;
+    slug: string;
     title: string;
-    image_url: string;
-    video_url: string;
-    link: string;
-    active: number;
-    display_order: number;
+    cover_image: string;
+    excerpt: string;
+    category: string;
+    created_at: string;
 }
 
 export default function BannersPage() {
-    const [banners, setBanners] = useState<Banner[]>([]);
+    const [bannerPosts, setBannerPosts] = useState<Post[]>([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [newBanner, setNewBanner] = useState({ title: '', image_url: '', video_url: '', link: '' });
-    const router = useRouter();
 
     useEffect(() => {
-        fetchBanners();
+        fetchBannerPosts();
     }, []);
 
-    const fetchBanners = async () => {
+    const fetchBannerPosts = async () => {
         try {
-            const res = await fetch('/api/banners');
+            const res = await fetch('/api/admin/posts');
             if (res.ok) {
                 const data = await res.json();
-                setBanners(data);
+                // Get the 3 most recent published posts
+                const publishedPosts = data.filter((p: any) => p.published === 1);
+                setBannerPosts(publishedPosts.slice(0, 3));
             }
         } catch (error) {
-            console.error('Failed to fetch banners', error);
+            console.error('Failed to fetch posts', error);
         } finally {
             setIsLoading(false);
         }
     };
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        if (!newBanner.image_url && !newBanner.video_url) {
-            alert('Por favor, faça upload de uma imagem ou vídeo');
-            return;
-        }
-        try {
-            const res = await fetch('/api/banners', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(newBanner),
-            });
-            if (res.ok) {
-                setNewBanner({ title: '', image_url: '', video_url: '', link: '' });
-                fetchBanners();
-            }
-        } catch (error) {
-            console.error('Failed to create banner', error);
-        }
-    };
-
-    const handleDelete = async (id: number) => {
-        if (!confirm('Tem certeza que deseja deletar este banner?')) return;
-        try {
-            const res = await fetch(`/api/banners?id=${id}`, { method: 'DELETE' });
-            if (res.ok) {
-                fetchBanners();
-            }
-        } catch (error) {
-            console.error('Failed to delete banner', error);
-        }
-    };
-
-    if (isLoading) return <div style={{ padding: '20px' }}>Carregando...</div>;
+    if (isLoading) return <div className={styles.loading}>Carregando...</div>;
 
     return (
-        <div style={{ padding: '20px' }}>
-            <h1>Gerenciar Banners</h1>
-
-            <div style={{ marginBottom: '40px', padding: '20px', border: '1px solid #ccc', borderRadius: '8px' }}>
-                <h2>Adicionar Novo Banner</h2>
-                <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '15px', maxWidth: '500px' }}>
-                    <div>
-                        <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Título (Opcional)</label>
-                        <input
-                            type="text"
-                            value={newBanner.title}
-                            onChange={(e) => setNewBanner({ ...newBanner, title: e.target.value })}
-                            placeholder="Deixe em branco se não quiser título"
-                            style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ccc' }}
-                        />
-                    </div>
-
-                    <div>
-                        <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Imagem</label>
-                        <ImageUpload
-                            value={newBanner.image_url}
-                            onChange={(url) => setNewBanner({ ...newBanner, image_url: url })}
-                            accept="image/*"
-                        />
-                    </div>
-
-                    <div>
-                        <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Vídeo (Opcional)</label>
-                        <ImageUpload
-                            value={newBanner.video_url}
-                            onChange={(url) => setNewBanner({ ...newBanner, video_url: url })}
-                            accept="video/*"
-                        />
-                        <small style={{ color: '#666', fontSize: '12px' }}>Se adicionar vídeo, ele será exibido no lugar da imagem</small>
-                    </div>
-
-                    <div>
-                        <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Link (Opcional)</label>
-                        <input
-                            type="text"
-                            value={newBanner.link}
-                            onChange={(e) => setNewBanner({ ...newBanner, link: e.target.value })}
-                            placeholder="https://..."
-                            style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ccc' }}
-                        />
-                    </div>
-
-                    <button
-                        type="submit"
-                        style={{
-                            padding: '10px',
-                            backgroundColor: '#0070f3',
-                            color: 'white',
-                            border: 'none',
-                            borderRadius: '4px',
-                            cursor: 'pointer',
-                            fontWeight: 'bold'
-                        }}
-                    >
-                        Adicionar Banner
-                    </button>
-                </form>
+        <div className={styles.container}>
+            <div className={styles.header}>
+                <div>
+                    <h1 className={styles.title}>Banners Ativos (Últimos Posts)</h1>
+                    <p className={styles.subtitle}>
+                        Os 3 posts mais recentes aparecem automaticamente no carrossel da home
+                    </p>
+                </div>
             </div>
 
-            <h2>Banners Existentes</h2>
-            <div style={{ display: 'grid', gap: '20px', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))' }}>
-                {banners.length === 0 ? (
-                    <p style={{ color: '#666' }}>Nenhum banner cadastrado ainda.</p>
-                ) : (
-                    banners.map((banner) => (
-                        <div key={banner.id} style={{ border: '1px solid #eee', borderRadius: '8px', overflow: 'hidden', boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
-                            {banner.video_url ? (
-                                <video
-                                    src={banner.video_url}
-                                    controls
-                                    style={{ width: '100%', height: '150px', objectFit: 'cover', backgroundColor: '#000' }}
+            <div style={{
+                padding: '20px',
+                backgroundColor: '#f0f9ff',
+                border: '1px solid #0ea5e9',
+                borderRadius: '8px',
+                marginBottom: '30px'
+            }}>
+                <p style={{ margin: 0, color: '#0c4a6e' }}>
+                    ℹ️ <strong>Sistema Automático:</strong> Os banners são atualizados automaticamente
+                    sempre que você publica um novo post. Os 3 posts mais recentes sempre aparecerão no carrossel.
+                </p>
+            </div>
+
+            {bannerPosts.length === 0 ? (
+                <div className={styles.empty}>
+                    <p>📝 Nenhum post publicado ainda. Publique posts para vê-los no banner.</p>
+                </div>
+            ) : (
+                <div style={{ display: 'grid', gap: '20px', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))' }}>
+                    {bannerPosts.map((post, index) => (
+                        <div key={post.id} style={{
+                            border: '2px solid #e5e7eb',
+                            borderRadius: '12px',
+                            overflow: 'hidden',
+                            boxShadow: '0 4px 6px rgba(0,0,0,0.1)'
+                        }}>
+                            {post.cover_image ? (
+                                <img
+                                    src={post.cover_image}
+                                    alt={post.title}
+                                    style={{
+                                        width: '100%',
+                                        height: '200px',
+                                        objectFit: 'cover'
+                                    }}
                                 />
-                            ) : banner.image_url ? (
-                                <img src={banner.image_url} alt={banner.title || 'Banner'} style={{ width: '100%', height: '150px', objectFit: 'cover' }} />
                             ) : (
-                                <div style={{ width: '100%', height: '150px', backgroundColor: '#f0f0f0', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#999' }}>
-                                    Sem mídia
+                                <div style={{
+                                    width: '100%',
+                                    height: '200px',
+                                    backgroundColor: '#f3f4f6',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    color: '#9ca3af'
+                                }}>
+                                    Sem imagem
                                 </div>
                             )}
-                            <div style={{ padding: '15px' }}>
-                                {banner.title && <h3 style={{ margin: '0 0 10px 0' }}>{banner.title}</h3>}
-                                <p style={{ margin: '0 0 10px 0', fontSize: '14px', color: '#666' }}>
-                                    {banner.link ? (
-                                        <a href={banner.link} target="_blank" rel="noopener noreferrer" style={{ color: '#0070f3' }}>
-                                            {banner.link}
-                                        </a>
-                                    ) : (
-                                        'Sem link'
-                                    )}
-                                </p>
-                                <div style={{ fontSize: '12px', color: '#999', marginBottom: '10px' }}>
-                                    {banner.video_url ? '🎥 Vídeo' : banner.image_url ? '🖼️ Imagem' : ''}
+                            <div style={{ padding: '20px' }}>
+                                <div style={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'center',
+                                    marginBottom: '10px'
+                                }}>
+                                    <span className={styles.categoryBadge}>{post.category}</span>
+                                    <span style={{
+                                        fontSize: '12px',
+                                        fontWeight: 'bold',
+                                        color: '#0ea5e9',
+                                        backgroundColor: '#e0f2fe',
+                                        padding: '4px 8px',
+                                        borderRadius: '4px'
+                                    }}>
+                                        #{index + 1} no Banner
+                                    </span>
                                 </div>
-                                <button
-                                    onClick={() => handleDelete(banner.id)}
-                                    style={{
-                                        padding: '8px 16px',
-                                        backgroundColor: '#ff4444',
-                                        color: 'white',
-                                        border: 'none',
-                                        borderRadius: '4px',
-                                        cursor: 'pointer',
-                                        fontWeight: 'bold'
-                                    }}
-                                >
-                                    🗑️ Deletar
-                                </button>
+                                <h3 style={{ margin: '0 0 10px 0', fontSize: '18px' }}>{post.title}</h3>
+                                <p style={{
+                                    margin: '0 0 15px 0',
+                                    fontSize: '14px',
+                                    color: '#6b7280',
+                                    lineHeight: '1.5'
+                                }}>
+                                    {post.excerpt}
+                                </p>
+                                <div style={{
+                                    display: 'flex',
+                                    gap: '10px',
+                                    alignItems: 'center',
+                                    justifyContent: 'space-between'
+                                }}>
+                                    <time style={{ fontSize: '12px', color: '#9ca3af' }}>
+                                        {new Date(post.created_at).toLocaleDateString('pt-BR')}
+                                    </time>
+                                    <div style={{ display: 'flex', gap: '10px' }}>
+                                        <Link
+                                            href={`/post/${post.slug}`}
+                                            target="_blank"
+                                            className={styles.viewBtn}
+                                            style={{
+                                                padding: '6px 12px',
+                                                fontSize: '14px',
+                                                textDecoration: 'none'
+                                            }}
+                                        >
+                                            👁️ Ver
+                                        </Link>
+                                        <Link
+                                            href={`/admin/posts/${post.id}/edit`}
+                                            className={styles.editBtn}
+                                            style={{
+                                                padding: '6px 12px',
+                                                fontSize: '14px',
+                                                textDecoration: 'none'
+                                            }}
+                                        >
+                                            ✏️ Editar
+                                        </Link>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    ))
-                )}
-            </div>
+                    ))}
+                </div>
+            )}
         </div>
     );
 }

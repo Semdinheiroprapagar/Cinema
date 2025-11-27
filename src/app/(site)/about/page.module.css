@@ -1,0 +1,56 @@
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+.header {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--foreground);
+}
+
+.content {
+    background: var(--card-background);
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.text p {
+    margin-bottom: 1rem;
+    line-height: 1.6;
+    font-size: 1.1rem;
+}
+
+.downloadSection {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+}
+
+.downloadSection h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.downloadButton {
+    display: inline-block;
+    background-color: var(--primary);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.2s;
+    margin-top: 1rem;
+}
+
+.downloadButton:hover {
+    background-color: var(--primary-hover);
+}
