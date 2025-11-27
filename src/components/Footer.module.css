@@ -77,11 +77,37 @@
     transition: all var(--transition-fast);
 }
 
+/* Instagram */
+.socialLink:nth-child(1) {
+    background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+    border: none;
+}
+
+/* Facebook */
+.socialLink:nth-child(2) {
+    background: #1877F2;
+    border: none;
+}
+
+/* Letterboxd */
+.socialLink:nth-child(3) {
+    background: #14181C;
+    /* Dark background for the colored dots */
+    border: none;
+}
+
+/* Hover Effect - All turn Orange */
 .socialLink:hover {
-    background: var(--primary);
-    border-color: var(--primary);
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3);
+    background: var(--primary) !important;
+    border-color: var(--primary) !important;
+    color: var(--white) !important;
+    box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3) !important;
+}
+
+/* Force Letterboxd circles to white on hover */
+.socialLink:nth-child(3):hover svg circle {
+    fill: white;
 }
 
 .socialLink svg {
