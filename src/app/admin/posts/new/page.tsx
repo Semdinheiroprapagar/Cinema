@@ -16,7 +16,8 @@ export default function NewPostPage() {
         if (res.ok) {
             router.push('/admin');
         } else {
-            alert('Failed to create post');
+            const data = await res.json();
+            alert(`Erro ao criar post: ${data.error || 'Erro desconhecido'}`);
         }
     }
 

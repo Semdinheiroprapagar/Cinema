@@ -16,9 +16,9 @@ export default function NewListasPostPage() {
 
         if (res.ok) {
             router.push('/admin');
-            router.refresh();
         } else {
-            alert('Erro ao criar post');
+            const data = await res.json();
+            alert(`Erro ao criar post: ${data.error || 'Erro desconhecido'}`);
         }
     };
 
