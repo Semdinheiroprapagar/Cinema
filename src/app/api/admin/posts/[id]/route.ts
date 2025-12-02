@@ -22,14 +22,14 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
 
     const { id } = await params;
     const body = await request.json();
-    const { title, content, excerpt, cover_image, category, content_type, video_url, rating, published } = body;
+    const { title, content, excerpt, cover_image, category, content_type, video_url, rating, published, list_items } = body;
 
     const slug = slugify(title, { lower: true, strict: true });
 
     try {
         const stmt = db.prepare(`
       UPDATE posts 
-      SET title = ?, slug = ?, content = ?, excerpt = ?, cover_image = ?, category = ?, content_type = ?, video_url = ?, rating = ?, published = ?
+      SET title = ?, slug = ?, content = ?, excerpt = ?, cover_image = ?, category = ?, content_type = ?, video_url = ?, rating = ?, published = ?, list_items = ?
       WHERE id = ?
     `);
 
@@ -44,6 +44,7 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
             video_url || null,
             rating || 0,
             published ? 1 : 0,
+            list_items ? JSON.stringify(list_items) : null,
             id
         );
 

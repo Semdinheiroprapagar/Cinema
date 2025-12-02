@@ -7,9 +7,26 @@ import StarRating from '@/components/StarRating';
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
+interface ListItem {
+    title: string;
+    image_url: string;
+    description?: string;
+}
+
 async function getPost(slug: string) {
     const stmt = db.prepare('SELECT * FROM posts WHERE slug = ? AND published = 1');
-    return stmt.get(slug) as any;
+    const post = stmt.get(slug) as any;
+
+    // Parse list_items if it exists
+    if (post && post.list_items && typeof post.list_items === 'string') {
+        try {
+            post.list_items = JSON.parse(post.list_items);
+        } catch (e) {
+            post.list_items = null;
+        }
+    }
+
+    return post;
 }
 
 export default async function PostPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -19,6 +36,9 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
     if (!post) {
         notFound();
     }
+
+    const listItems: ListItem[] = post.list_items || [];
+    const hasListItems = listItems.length > 0;
 
     return (
         <article className={styles.container}>
@@ -42,10 +62,35 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                 </div>
             )}
 
-            <div
-                className={styles.content}
-                dangerouslySetInnerHTML={{ __html: post.content }}
-            />
+            {post.content && (
+                <div
+                    className={styles.content}
+                    dangerouslySetInnerHTML={{ __html: post.content }}
+                />
+            )}
+
+            {hasListItems && (
+                <div className={styles.listItems}>
+                    {listItems.map((item, index) => (
+                        <div key={index} className={styles.listItem}>
+                            {item.image_url && (
+                                <div className={styles.listItemImage}>
+                                    <img src={item.image_url} alt={item.title} />
+                                </div>
+                            )}
+                            <h3 className={styles.listItemTitle}>
+                                <span className={styles.listItemNumber}>{index + 1}.</span>
+                                {item.title}
+                            </h3>
+                            {item.description && (
+                                <div className={styles.listItemDescription}>
+                                    {item.description}
+                                </div>
+                            )}
+                        </div>
+                    ))}
+                </div>
+            )}
         </article>
     );
 }

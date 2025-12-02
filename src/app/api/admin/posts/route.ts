@@ -20,7 +20,7 @@ export async function POST(request: Request) {
     // if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
     const body = await request.json();
-    const { title, content, excerpt, cover_image, category, content_type, video_url, rating, published } = body;
+    const { title, content, excerpt, cover_image, category, content_type, video_url, rating, published, list_items } = body;
 
     let slug = slugify(title, { lower: true, strict: true });
 
@@ -41,8 +41,8 @@ export async function POST(request: Request) {
 
     try {
         const stmt = db.prepare(`
-      INSERT INTO posts (title, slug, content, excerpt, cover_image, category, content_type, video_url, rating, published)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      INSERT INTO posts (title, slug, content, excerpt, cover_image, category, content_type, video_url, rating, published, list_items)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `);
 
         const info = stmt.run(
@@ -55,7 +55,8 @@ export async function POST(request: Request) {
             content_type || 'post',
             video_url || null,
             rating || 0,
-            published ? 1 : 0
+            published ? 1 : 0,
+            list_items ? JSON.stringify(list_items) : null
         );
 
         revalidatePath('/');

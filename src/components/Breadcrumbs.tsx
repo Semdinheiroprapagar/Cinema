@@ -24,7 +24,7 @@ export default function Breadcrumbs() {
         else if (segment === 'activities') label = 'Atividades';
         else if (segment === 'criticas') label = 'Críticas';
         else if (segment === 'listas') label = 'Listas';
-        else if (segment === 'artigos') label = 'Listas'; // Backward compatibility
+        else if (segment === 'artigos') label = 'Artigos';
         else if (segment === 'videos') label = 'Vídeos';
         else if (segment === 'festivais') label = 'Festivais';
         else if (segment === 'curiosidades') label = 'Curiosidades';

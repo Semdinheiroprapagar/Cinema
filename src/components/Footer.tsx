@@ -40,9 +40,8 @@ export default function Footer() {
                         <nav className={styles.nav}>
                             <Link href="/category/criticas">Críticas</Link>
                             <Link href="/category/listas">Listas</Link>
+                            <Link href="/category/artigos">Artigos</Link>
                             <Link href="/category/curiosidades">Curiosidades</Link>
-                            <Link href="/category/videos">Vídeos</Link>
-                            <Link href="/category/festivais">Festivais</Link>
                         </nav>
                     </div>
                 </div>

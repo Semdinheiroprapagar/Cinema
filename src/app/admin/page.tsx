@@ -84,22 +84,16 @@ export default function AdminDashboard() {
                     📋 Listas ({posts.filter(p => p.category === 'Listas').length})
                 </button>
                 <button
+                    className={`${styles.filterBtn} ${filter === 'Artigos' ? styles.active : ''}`}
+                    onClick={() => setFilter('Artigos')}
+                >
+                    📝 Artigos ({posts.filter(p => p.category === 'Artigos').length})
+                </button>
+                <button
                     className={`${styles.filterBtn} ${filter === 'Curiosidades' ? styles.active : ''}`}
                     onClick={() => setFilter('Curiosidades')}
                 >
                     💡 Curiosidades ({posts.filter(p => p.category === 'Curiosidades').length})
-                </button>
-                <button
-                    className={`${styles.filterBtn} ${filter === 'Vídeos' ? styles.active : ''}`}
-                    onClick={() => setFilter('Vídeos')}
-                >
-                    🎬 Vídeos ({posts.filter(p => p.category === 'Vídeos').length})
-                </button>
-                <button
-                    className={`${styles.filterBtn} ${filter === 'Festivais' ? styles.active : ''}`}
-                    onClick={() => setFilter('Festivais')}
-                >
-                    🎪 Festivais ({posts.filter(p => p.category === 'Festivais').length})
                 </button>
             </div>
 

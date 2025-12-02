@@ -16,7 +16,17 @@ export default function EditPostPage() {
                 if (res.ok) return res.json();
                 throw new Error('Failed to fetch');
             })
-            .then((data) => setPost(data))
+            .then((data) => {
+                // Parse list_items if it exists
+                if (data.list_items && typeof data.list_items === 'string') {
+                    try {
+                        data.list_items = JSON.parse(data.list_items);
+                    } catch (e) {
+                        data.list_items = [];
+                    }
+                }
+                setPost(data);
+            })
             .catch(() => router.push('/admin'));
     }, [id, router]);
 

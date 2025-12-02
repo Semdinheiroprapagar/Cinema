@@ -90,4 +90,11 @@ try {
   // Column likely already exists, ignore error
 }
 
+// Migration for list items
+try {
+  db.exec('ALTER TABLE posts ADD COLUMN list_items TEXT');
+} catch (error) {
+  // Column likely already exists, ignore error
+}
+
 export default db;

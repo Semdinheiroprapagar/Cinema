@@ -18,7 +18,7 @@ async function getPostsByCategory(categorySlug: string) {
     const categoryMap: Record<string, string> = {
         'criticas': 'Críticas',
         'listas': 'Listas',
-        'artigos': 'Listas', // Backward compatibility
+        'artigos': 'Artigos',
         'videos': 'Vídeos',
         'festivais': 'Festivais',
         'curiosidades': 'Curiosidades',

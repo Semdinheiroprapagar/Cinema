@@ -6,6 +6,13 @@ import Link from 'next/link';
 import styles from '../app/admin/admin.module.css';
 import StarRating from './StarRating';
 import ImageUpload from './ImageUpload';
+import ListItemsEditor from './ListItemsEditor';
+
+interface ListItem {
+    title: string;
+    image_url: string;
+    description?: string;
+}
 
 interface PostFormProps {
     initialData?: {
@@ -18,6 +25,7 @@ interface PostFormProps {
         video_url: string;
         rating: number;
         published: boolean;
+        list_items?: ListItem[];
     };
     onSubmit: (data: any) => Promise<void>;
     isEditing?: boolean;
@@ -35,6 +43,7 @@ export default function PostForm({ initialData, onSubmit, isEditing }: PostFormP
             video_url: '',
             rating: 0,
             published: false,
+            list_items: [],
         }
     );
     const [loading, setLoading] = useState(false);
@@ -89,9 +98,8 @@ export default function PostForm({ initialData, onSubmit, isEditing }: PostFormP
                     >
                         <option value="Críticas">Críticas</option>
                         <option value="Listas">Listas</option>
+                        <option value="Artigos">Artigos</option>
                         <option value="Curiosidades">Curiosidades</option>
-                        <option value="Vídeos">Vídeos</option>
-                        <option value="Festivais">Festivais</option>
                     </select>
                 </div>
 
@@ -158,6 +166,13 @@ export default function PostForm({ initialData, onSubmit, isEditing }: PostFormP
                         rows={15}
                     />
                 </div>
+
+                {formData.category === 'Listas' && (
+                    <ListItemsEditor
+                        value={formData.list_items || []}
+                        onChange={(items) => setFormData((prev) => ({ ...prev, list_items: items }))}
+                    />
+                )}
 
                 <div className={`${styles.field} ${styles.checkbox}`}>
                     <input
