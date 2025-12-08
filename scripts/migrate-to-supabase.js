@@ -16,8 +16,9 @@ const { createClient } = require('@supabase/supabase-js');
 const fs = require('fs');
 const path = require('path');
 
-// Carregar variáveis de ambiente
+// Carregar variáveis de ambiente (ordem: .env.local > .env)
 require('dotenv').config({ path: '.env.local' });
+require('dotenv').config({ path: '.env' });
 
 // Configurar Supabase
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -181,6 +182,12 @@ async function uploadImages() {
 
     for (const file of files) {
         const filePath = path.join(uploadsDir, file);
+
+        // Ignorar diretórios, processar apenas arquivos
+        if (fs.statSync(filePath).isDirectory()) {
+            continue;
+        }
+
         const fileBuffer = fs.readFileSync(filePath);
 
         const { error } = await supabase.storage
