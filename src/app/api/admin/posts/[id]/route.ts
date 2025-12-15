@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import db from '@/lib/db';
+import { db } from '@/lib/database';
 import slugify from 'slugify';
 import { getSession } from '@/lib/auth';
 
@@ -7,49 +7,47 @@ export async function GET(request: Request, { params }: { params: Promise<{ id: 
     const session = await getSession();
     if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
-    const { id } = await params;
-    const stmt = db.prepare('SELECT * FROM posts WHERE id = ?');
-    const post = stmt.get(id);
+    try {
+        const { id } = await params;
+        const post = await db.posts.getById(parseInt(id));
 
-    if (!post) return NextResponse.json({ error: 'Post not found' }, { status: 404 });
+        if (!post) return NextResponse.json({ error: 'Post not found' }, { status: 404 });
 
-    return NextResponse.json(post);
+        return NextResponse.json(post);
+    } catch (error: any) {
+        console.error('Error fetching post:', error);
+        return NextResponse.json({ error: error.message }, { status: 500 });
+    }
 }
 
 export async function PUT(request: Request, { params }: { params: Promise<{ id: string }> }) {
     const session = await getSession();
     if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
-    const { id } = await params;
-    const body = await request.json();
-    const { title, content, excerpt, cover_image, category, content_type, video_url, rating, published, list_items } = body;
-
-    const slug = slugify(title, { lower: true, strict: true });
-
     try {
-        const stmt = db.prepare(`
-      UPDATE posts 
-      SET title = ?, slug = ?, content = ?, excerpt = ?, cover_image = ?, category = ?, content_type = ?, video_url = ?, rating = ?, published = ?, list_items = ?
-      WHERE id = ?
-    `);
+        const { id } = await params;
+        const body = await request.json();
+        const { title, content, excerpt, cover_image, category, content_type, video_url, rating, published, list_items } = body;
 
-        stmt.run(
+        const slug = slugify(title, { lower: true, strict: true });
+
+        await db.posts.update(parseInt(id), {
             title,
             slug,
             content,
             excerpt,
             cover_image,
             category,
-            content_type || 'post',
-            video_url || null,
-            rating || 0,
-            published ? 1 : 0,
-            list_items ? JSON.stringify(list_items) : null,
-            id
-        );
+            content_type: content_type || 'post',
+            video_url: video_url || undefined,
+            rating: rating || 0,
+            published: published || false,
+            list_items: list_items ? JSON.stringify(list_items) : undefined,
+        });
 
         return NextResponse.json({ success: true });
     } catch (error: any) {
+        console.error('Error updating post:', error);
         return NextResponse.json({ error: error.message }, { status: 500 });
     }
 }
@@ -58,9 +56,13 @@ export async function DELETE(request: Request, { params }: { params: Promise<{ i
     const session = await getSession();
     if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
-    const { id } = await params;
-    const stmt = db.prepare('DELETE FROM posts WHERE id = ?');
-    stmt.run(id);
+    try {
+        const { id } = await params;
+        await db.posts.delete(parseInt(id));
 
-    return NextResponse.json({ success: true });
+        return NextResponse.json({ success: true });
+    } catch (error: any) {
+        console.error('Error deleting post:', error);
+        return NextResponse.json({ error: error.message }, { status: 500 });
+    }
 }
