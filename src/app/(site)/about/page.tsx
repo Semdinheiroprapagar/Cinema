@@ -23,6 +23,7 @@ export default function AboutPage() {
                         height={600}
                         className={styles.profileImage}
                         priority
+                        unoptimized
                     />
                 </div>
                 <div className={styles.text}>
