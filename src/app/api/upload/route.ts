@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { writeFile } from 'fs/promises';
-import path from 'path';
 import { getSession } from '@/lib/auth';
+import { createClient } from '@supabase/supabase-js';
 
 export async function POST(request: NextRequest) {
     try {
@@ -30,38 +29,66 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ error: 'File too large' }, { status: 400 });
         }
 
-        // Generate unique filename
-        const bytes = await file.arrayBuffer();
-        const buffer = Buffer.from(bytes);
+        // Initialize Supabase client
+        const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+        const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
+        if (!supabaseUrl || !supabaseKey) {
+            console.error('[Upload] Missing Supabase credentials');
+            return NextResponse.json({ error: 'Server configuration error' }, { status: 500 });
+        }
+
+        const supabase = createClient(supabaseUrl, supabaseKey);
+
+        // Generate unique filename
         const timestamp = Date.now();
         const originalName = file.name.replace(/[^a-zA-Z0-9.-]/g, '_');
         const filename = `${timestamp}-${originalName}`;
 
         // Determine subdirectory based on file type
         const subdir = file.type.startsWith('video/') ? 'videos' : 'images';
-        const uploadDir = path.join(process.cwd(), 'public', 'uploads', subdir);
+        const storagePath = `${subdir}/${filename}`;
 
-        // Create directory if it doesn't exist
-        const fs = require('fs');
-        if (!fs.existsSync(uploadDir)) {
-            fs.mkdirSync(uploadDir, { recursive: true });
+        // Convert file to buffer
+        const bytes = await file.arrayBuffer();
+        const buffer = Buffer.from(bytes);
+
+        console.log('[Upload] Uploading to Supabase Storage:', storagePath);
+
+        // Upload to Supabase Storage
+        const { data, error } = await supabase.storage
+            .from('uploads')
+            .upload(storagePath, buffer, {
+                contentType: file.type,
+                upsert: false
+            });
+
+        if (error) {
+            console.error('[Upload] Supabase upload error:', error);
+            return NextResponse.json({
+                error: 'Upload failed',
+                details: error.message
+            }, { status: 500 });
         }
 
-        const filepath = path.join(uploadDir, filename);
-        await writeFile(filepath, buffer);
+        // Get public URL
+        const { data: { publicUrl } } = supabase.storage
+            .from('uploads')
+            .getPublicUrl(storagePath);
 
-        // Return the public URL
-        const url = `/uploads/${subdir}/${filename}`;
+        console.log('[Upload] Upload successful:', publicUrl);
 
         return NextResponse.json({
-            url,
+            url: publicUrl,
             filename,
             type: file.type,
             size: file.size
         });
-    } catch (error) {
-        console.error('Upload error:', error);
-        return NextResponse.json({ error: 'Upload failed' }, { status: 500 });
+    } catch (error: any) {
+        console.error('[Upload] Upload error:', error);
+        return NextResponse.json({
+            error: 'Upload failed',
+            details: error.message
+        }, { status: 500 });
     }
 }
