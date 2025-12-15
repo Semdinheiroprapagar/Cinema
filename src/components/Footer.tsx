@@ -50,7 +50,7 @@ export default function Footer() {
                     <div className={styles.logoContainer}>
                         <Image src="/logo.png" alt="Meio Amargo" width={100} height={50} className={styles.logo} />
                     </div>
-                    <p className={styles.copyright}>© 2025 Meio Amargo. Todos os direitos reservados.</p>
+                    <p className={styles.copyright}>© 2025 Fragmentosdocinema. Todos os direitos reservados.</p>
                 </div>
             </div>
         </footer>
