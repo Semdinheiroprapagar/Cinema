@@ -17,7 +17,7 @@ export default function AboutPage() {
             <div className={styles.content}>
                 <div className={styles.imageContainer}>
                     <Image
-                        src="/uploads/perfil.png"
+                        src="https://ygxsmellzuitjlenvcig.supabase.co/storage/v1/object/public/uploads/images/perfil.png"
                         alt="Murilo Abrahão de Paula"
                         width={400}
                         height={600}
