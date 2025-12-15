@@ -4,7 +4,6 @@
  * Implements the DatabaseAdapter interface using better-sqlite3 for local development.
  */
 
-import Database from 'better-sqlite3';
 import path from 'path';
 import type {
     DatabaseAdapter,
@@ -24,8 +23,17 @@ import type {
     UpdateActivityInput,
 } from '../database.types';
 
+// Conditional import to avoid loading in production
+let Database: any;
+try {
+    Database = require('better-sqlite3');
+} catch (e) {
+    // better-sqlite3 not available (e.g., in Vercel)
+    console.warn('[SQLite] better-sqlite3 not available in this environment');
+}
+
 export class SQLiteAdapter implements DatabaseAdapter {
-    private db: Database.Database;
+    private db: any;
 
     public users: UserAdapter;
     public posts: PostAdapter;
@@ -33,6 +41,12 @@ export class SQLiteAdapter implements DatabaseAdapter {
     public activities: ActivityAdapter;
 
     constructor(dbPath?: string) {
+        if (!Database) {
+            throw new Error(
+                'SQLite is not available in this environment. Please use DATABASE_TYPE=supabase instead.'
+            );
+        }
+
         const finalPath = dbPath || path.join(process.cwd(), 'cinema.db');
         this.db = new Database(finalPath);
 
@@ -126,7 +140,7 @@ export class SQLiteAdapter implements DatabaseAdapter {
 // ==================== User Adapter ====================
 
 class SQLiteUserAdapter implements UserAdapter {
-    constructor(private db: Database.Database) { }
+    constructor(private db: any) { }
 
     async findByUsername(username: string): Promise<User | null> {
         const stmt = this.db.prepare('SELECT * FROM users WHERE username = ?');
@@ -153,7 +167,7 @@ class SQLiteUserAdapter implements UserAdapter {
 // ==================== Post Adapter ====================
 
 class SQLitePostAdapter implements PostAdapter {
-    constructor(private db: Database.Database) { }
+    constructor(private db: any) { }
 
     async getAll(): Promise<Post[]> {
         const stmt = this.db.prepare('SELECT * FROM posts ORDER BY created_at DESC');
@@ -250,7 +264,7 @@ class SQLitePostAdapter implements PostAdapter {
 // ==================== Banner Adapter ====================
 
 class SQLiteBannerAdapter implements BannerAdapter {
-    constructor(private db: Database.Database) { }
+    constructor(private db: any) { }
 
     async getAll(): Promise<Banner[]> {
         const stmt = this.db.prepare('SELECT * FROM banners ORDER BY display_order ASC');
@@ -325,7 +339,7 @@ class SQLiteBannerAdapter implements BannerAdapter {
 // ==================== Activity Adapter ====================
 
 class SQLiteActivityAdapter implements ActivityAdapter {
-    constructor(private db: Database.Database) { }
+    constructor(private db: any) { }
 
     async getAll(): Promise<Activity[]> {
         const stmt = this.db.prepare('SELECT * FROM activities ORDER BY display_order ASC');
