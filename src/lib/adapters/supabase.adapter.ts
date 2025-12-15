@@ -36,8 +36,14 @@ export class SupabaseAdapter implements DatabaseAdapter {
         const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
         if (!supabaseUrl || !supabaseKey) {
+            const missing = [];
+            if (!supabaseUrl) missing.push('NEXT_PUBLIC_SUPABASE_URL');
+            if (!supabaseKey) missing.push('SUPABASE_SERVICE_ROLE_KEY');
+
             throw new Error(
-                'Missing Supabase credentials. Please set NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY'
+                `Missing Supabase credentials: ${missing.join(', ')}. ` +
+                `Please configure these environment variables in your deployment platform (Vercel/etc). ` +
+                `See VERCEL_ENV_SETUP.md for instructions.`
             );
         }
 
