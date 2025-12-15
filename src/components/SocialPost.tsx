@@ -7,8 +7,8 @@ interface SocialPostProps {
     post: {
         title: string;
         content: string;
-        cover_image: string;
-        created_at: string;
+        cover_image?: string | null;
+        created_at?: string | Date;
         category: string;
     };
 }
@@ -20,7 +20,7 @@ export default function SocialPost({ post }: SocialPostProps) {
                 <div className={styles.avatar}>MA</div>
                 <div className={styles.meta}>
                     <span className={styles.author}>Meio Amargo</span>
-                    <span className={styles.date}>{new Date(post.created_at).toLocaleDateString()}</span>
+                    {post.created_at && <span className={styles.date}>{new Date(post.created_at).toLocaleDateString()}</span>}
                 </div>
             </div>
 

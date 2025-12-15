@@ -1,4 +1,4 @@
-import db from '@/lib/db';
+import { db } from '@/lib/database';
 import { notFound } from 'next/navigation';
 import styles from '../post.module.css';
 import StarRating from '@/components/StarRating';
@@ -14,8 +14,9 @@ interface ListItem {
 }
 
 async function getPost(slug: string) {
-    const stmt = db.prepare('SELECT * FROM posts WHERE slug = ? AND published = 1');
-    const post = stmt.get(slug) as any;
+    const post = await db.posts.getBySlug(slug);
+
+    if (!post || !post.published) return null;
 
     // Parse list_items if it exists
     if (post && post.list_items && typeof post.list_items === 'string') {
@@ -37,7 +38,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
         notFound();
     }
 
-    const listItems: ListItem[] = post.list_items || [];
+    const listItems: ListItem[] = (Array.isArray(post.list_items) ? post.list_items : []) as ListItem[];
     const hasListItems = listItems.length > 0;
 
     return (
@@ -45,10 +46,10 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
             <header className={styles.header}>
                 <span className={styles.category}>{post.category}</span>
                 <h1 className={styles.title}>{post.title}</h1>
-                <p className={styles.excerpt}>{post.excerpt}</p>
+                {post.excerpt && <p className={styles.excerpt}>{post.excerpt}</p>}
                 <div className={styles.meta}>
-                    <time>{new Date(post.created_at).toLocaleDateString()}</time>
-                    {post.rating > 0 && (
+                    {post.created_at && <time>{new Date(post.created_at).toLocaleDateString()}</time>}
+                    {post.rating && post.rating > 0 && (
                         <div style={{ marginLeft: '15px' }}>
                             <StarRating value={post.rating} readOnly size="medium" />
                         </div>

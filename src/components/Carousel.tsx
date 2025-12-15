@@ -8,8 +8,8 @@ interface Post {
     id: number;
     slug: string;
     title: string;
-    cover_image: string;
-    excerpt: string;
+    cover_image?: string | null;
+    excerpt?: string | null;
 }
 
 interface CarouselProps {

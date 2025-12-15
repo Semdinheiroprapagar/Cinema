@@ -5,7 +5,7 @@ import styles from './VideoPlayer.module.css';
 
 interface VideoPlayerProps {
     src: string;
-    poster?: string;
+    poster?: string | null;
 }
 
 export default function VideoPlayer({ src, poster }: VideoPlayerProps) {
@@ -29,7 +29,7 @@ export default function VideoPlayer({ src, poster }: VideoPlayerProps) {
                 ref={videoRef}
                 className={styles.video}
                 src={src}
-                poster={poster}
+                {...(poster && { poster })}
                 controls
                 onPlay={() => setIsPlaying(true)}
                 onPause={() => setIsPlaying(false)}

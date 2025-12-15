@@ -7,14 +7,14 @@ import VideoPlayer from './VideoPlayer';
 interface Post {
     slug: string;
     title: string;
-    excerpt: string;
+    excerpt?: string | null;
     content: string;
-    cover_image: string;
+    cover_image?: string | null;
     category: string;
-    created_at: string;
+    created_at?: string | Date;
     rating?: number;
     content_type?: string;
-    video_url?: string;
+    video_url?: string | null;
 }
 
 export default function PostCard({ post }: { post: Post }) {
@@ -35,8 +35,8 @@ export default function PostCard({ post }: { post: Post }) {
                     <Link href={`/post/${post.slug}`}>
                         <h2 className={styles.title}>{post.title}</h2>
                     </Link>
-                    <p className={styles.excerpt}>{post.excerpt}</p>
-                    <time className={styles.date}>{new Date(post.created_at).toLocaleDateString()}</time>
+                    {post.excerpt && <p className={styles.excerpt}>{post.excerpt}</p>}
+                    {post.created_at && <time className={styles.date}>{new Date(post.created_at).toLocaleDateString()}</time>}
                 </div>
             </article>
         );
@@ -61,8 +61,8 @@ export default function PostCard({ post }: { post: Post }) {
                 <Link href={`/post/${post.slug}`}>
                     <h2 className={styles.title}>{post.title}</h2>
                 </Link>
-                <p className={styles.excerpt}>{post.excerpt}</p>
-                <time className={styles.date}>{new Date(post.created_at).toLocaleDateString()}</time>
+                {post.excerpt && <p className={styles.excerpt}>{post.excerpt}</p>}
+                {post.created_at && <time className={styles.date}>{new Date(post.created_at).toLocaleDateString()}</time>}
             </div>
         </article>
     );

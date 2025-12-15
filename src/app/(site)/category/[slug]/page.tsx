@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import db from '@/lib/db';
+import { db } from '@/lib/database';
 import PostCard from '@/components/PostCard';
 import styles from './page.module.css';
 
@@ -28,10 +28,10 @@ async function getPostsByCategory(categorySlug: string) {
     const categoryName = categoryMap[categorySlug.toLowerCase()];
     if (!categoryName) return null;
 
-    const stmt = db.prepare('SELECT * FROM posts WHERE category = ? AND published = 1 ORDER BY created_at DESC');
+    const posts = await db.posts.getByCategory(categoryName);
     return {
         name: categoryName,
-        posts: stmt.all(categoryName)
+        posts
     };
 }
 

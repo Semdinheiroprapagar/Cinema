@@ -1,4 +1,4 @@
-import db from '@/lib/db';
+import { db } from '@/lib/database';
 import Link from 'next/link';
 import styles from './home.module.css';
 import PostCard from '@/components/PostCard';
@@ -10,8 +10,7 @@ export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 async function getPosts() {
-  const stmt = db.prepare('SELECT * FROM posts WHERE published = 1 ORDER BY created_at DESC');
-  return stmt.all() as any[];
+  return await db.posts.getPublished();
 }
 
 export default async function Home() {
