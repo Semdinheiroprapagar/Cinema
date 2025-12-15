@@ -32,27 +32,43 @@ export class SupabaseAdapter implements DatabaseAdapter {
     public activities: ActivityAdapter;
 
     constructor() {
+        console.log('[SupabaseAdapter] Starting initialization...');
+
         const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
         const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+        console.log('[SupabaseAdapter] Environment check:', {
+            hasUrl: !!supabaseUrl,
+            hasKey: !!supabaseKey,
+            urlPreview: supabaseUrl?.substring(0, 30)
+        });
 
         if (!supabaseUrl || !supabaseKey) {
             const missing = [];
             if (!supabaseUrl) missing.push('NEXT_PUBLIC_SUPABASE_URL');
             if (!supabaseKey) missing.push('SUPABASE_SERVICE_ROLE_KEY');
 
-            throw new Error(
-                `Missing Supabase credentials: ${missing.join(', ')}. ` +
+            const errorMsg = `Missing Supabase credentials: ${missing.join(', ')}. ` +
                 `Please configure these environment variables in your deployment platform (Vercel/etc). ` +
-                `See VERCEL_ENV_SETUP.md for instructions.`
-            );
+                `See VERCEL_ENV_SETUP.md for instructions.`;
+
+            console.error('[SupabaseAdapter]', errorMsg);
+            throw new Error(errorMsg);
         }
 
-        this.supabase = createClient(supabaseUrl, supabaseKey, {
-            auth: {
-                autoRefreshToken: false,
-                persistSession: false,
-            },
-        });
+        try {
+            console.log('[SupabaseAdapter] Creating Supabase client...');
+            this.supabase = createClient(supabaseUrl, supabaseKey, {
+                auth: {
+                    autoRefreshToken: false,
+                    persistSession: false,
+                },
+            });
+            console.log('[SupabaseAdapter] Supabase client created successfully');
+        } catch (error: any) {
+            console.error('[SupabaseAdapter] Error creating client:', error);
+            throw error;
+        }
 
         // Initialize adapters
         this.users = new SupabaseUserAdapter(this.supabase);
