@@ -51,10 +51,15 @@ function getDatabaseInstance(): DatabaseAdapter {
 }
 
 /**
- * Export the database instance
- * Usage: import { db } from '@/lib/database';
+ * Export a getter function instead of direct instance
+ * This ensures initialization only happens when actually needed
  */
-export const db = getDatabaseInstance();
+export const db = new Proxy({} as DatabaseAdapter, {
+    get(target, prop) {
+        const instance = getDatabaseInstance();
+        return instance[prop as keyof DatabaseAdapter];
+    }
+});
 
 /**
  * Export the database type for conditional logic if needed
