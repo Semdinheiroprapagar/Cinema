@@ -1,7 +1,8 @@
 .carousel {
     position: relative;
     width: 100%;
-    height: clamp(300px, 50vw, 600px);
+    height: calc(100dvh - 140px);
+    /* 100dvh - altura do header */
     overflow: hidden;
     background: linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(26, 26, 26, 0.95) 100%);
     border-radius: var(--radius-xl);
@@ -112,7 +113,8 @@
 
 @media (max-width: 768px) {
     .carousel {
-        height: clamp(250px, 60vw, 400px);
+        height: calc(100dvh - 100px);
+        /* Altura ajustada para mobile */
         border-radius: var(--radius-lg);
     }
 
