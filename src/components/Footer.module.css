@@ -1,6 +1,7 @@
 .footer {
     margin-top: var(--spacing-xl);
     margin-bottom: 0;
+    padding-bottom: 0;
     background: rgba(0, 0, 0, 0.95);
     backdrop-filter: var(--glass-blur);
     -webkit-backdrop-filter: var(--glass-blur);
@@ -12,6 +13,7 @@
     max-width: 1200px;
     margin: 0 auto;
     padding: var(--spacing-xl) var(--spacing-md);
+    padding-bottom: 0;
 }
 
 .content {
