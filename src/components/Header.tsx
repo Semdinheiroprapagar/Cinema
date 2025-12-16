@@ -22,11 +22,9 @@ export default function Header() {
         <div className={styles.topBar}>
           <div className={styles.socials}>
             {/* Social Icons Placeholder */}
-            <span>Socials</span>
           </div>
           <div className={styles.search}>
             {/* Search Placeholder */}
-            <span>Search</span>
           </div>
         </div>
         <div className={styles.mainNav}>
