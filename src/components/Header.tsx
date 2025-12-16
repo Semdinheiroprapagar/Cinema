@@ -31,7 +31,7 @@ export default function Header() {
         </div>
         <div className={styles.mainNav}>
           <Link href="/" className={styles.logo} onClick={closeMenu}>
-            <Image src="/logo.png" alt="Meio Amargo" width={120} height={60} className={styles.logoImage} />
+            <Image src="/logo.png" alt="Fragmentos do Cinema" width={120} height={60} className={styles.logoImage} />
           </Link>
 
           {/* Hamburger Button */}

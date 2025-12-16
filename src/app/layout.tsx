@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Meio Amargo - Cinema e Séries",
+  title: "Fragmentos do Cinema - Cinema e Séries",
   description: "Críticas, listas, vídeos e entrevistas de cinema e séries.",
   icons: {
     icon: '/favicon.png',
