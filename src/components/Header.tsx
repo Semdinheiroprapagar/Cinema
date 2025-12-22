@@ -4,10 +4,12 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useState } from 'react';
 import styles from './Header.module.css';
-import SearchBar from './SearchBar';
+import SearchButton from './SearchButton';
+import SearchModal from './SearchModal';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -17,17 +19,17 @@ export default function Header() {
     setIsMenuOpen(false);
   };
 
+  const openSearch = () => {
+    setIsSearchOpen(true);
+  };
+
+  const closeSearch = () => {
+    setIsSearchOpen(false);
+  };
+
   return (
     <header className={styles.header}>
       <div className={styles.container}>
-        <div className={styles.topBar}>
-          <div className={styles.socials}>
-            {/* Social Icons Placeholder */}
-          </div>
-          <div className={styles.search}>
-            <SearchBar />
-          </div>
-        </div>
         <div className={styles.mainNav}>
           <Link href="/" className={styles.logo} onClick={closeMenu}>
             <Image src="/logo.png" alt="Fragmentos do Cinema" width={120} height={60} className={styles.logoImage} />
@@ -52,6 +54,11 @@ export default function Header() {
             <Link href="/category/curiosidades" onClick={closeMenu}>Curiosidades</Link>
             <Link href="/about" onClick={closeMenu}>Quem Sou</Link>
           </nav>
+
+          {/* Search Button */}
+          <div className={styles.searchButtonWrapper}>
+            <SearchButton onClick={openSearch} />
+          </div>
         </div>
       </div>
 
@@ -59,6 +66,9 @@ export default function Header() {
       {isMenuOpen && (
         <div className={styles.overlay} onClick={closeMenu}></div>
       )}
+
+      {/* Search Modal */}
+      <SearchModal isOpen={isSearchOpen} onClose={closeSearch} />
     </header>
   );
 }

@@ -78,6 +78,11 @@
     color: var(--primary-light);
 }
 
+.searchButtonWrapper {
+    display: none;
+}
+
+
 /* Hamburger Menu Button - Hidden on Desktop */
 .hamburger {
     display: none;
@@ -135,13 +140,13 @@
         justify-content: space-between;
         gap: var(--spacing-md);
         width: 100%;
+        align-items: center;
     }
 
     .nav {
         flex: 1;
-        justify-content: space-evenly;
-        gap: 0;
-        margin-left: var(--spacing-xl);
+        justify-content: center;
+        gap: var(--spacing-md);
         flex-wrap: nowrap;
     }
 
@@ -150,9 +155,14 @@
         flex-shrink: 0;
     }
 
+    .searchButtonWrapper {
+        display: flex;
+        align-items: center;
+        flex-shrink: 0;
+    }
+
     .topBar {
-        justify-content: flex-end;
-        margin-bottom: var(--spacing-sm);
+        display: none;
     }
 
     .socials {
@@ -170,6 +180,14 @@
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
+    }
+
+    .searchButtonWrapper {
+        display: flex;
+        align-items: center;
+        position: absolute;
+        right: 60px;
+        z-index: 1002;
     }
 
     /* Show Hamburger on Mobile */
