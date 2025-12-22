@@ -138,6 +138,7 @@ export interface PostAdapter {
     getBySlug(slug: string): Promise<Post | null>;
     getById(id: number): Promise<Post | null>;
     getByCategory(category: string): Promise<Post[]>;
+    search(query: string): Promise<Post[]>;
     create(post: CreatePostInput): Promise<Post>;
     update(id: number, post: UpdatePostInput): Promise<Post>;
     delete(id: number): Promise<void>;

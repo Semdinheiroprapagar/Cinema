@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useState } from 'react';
 import styles from './Header.module.css';
+import SearchBar from './SearchBar';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -24,7 +25,7 @@ export default function Header() {
             {/* Social Icons Placeholder */}
           </div>
           <div className={styles.search}>
-            {/* Search Placeholder */}
+            <SearchBar />
           </div>
         </div>
         <div className={styles.mainNav}>

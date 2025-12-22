@@ -207,6 +207,25 @@ class SupabasePostAdapter implements PostAdapter {
         return toArray(data) as Post[];
     }
 
+    async search(query: string): Promise<Post[]> {
+        if (!query || query.trim().length === 0) {
+            return [];
+        }
+
+        const searchTerm = `%${query.trim()}%`;
+
+        const { data, error } = await this.supabase
+            .from('posts')
+            .select('*')
+            .eq('published', true)
+            .or(`title.ilike.${searchTerm},excerpt.ilike.${searchTerm},content.ilike.${searchTerm},category.ilike.${searchTerm}`)
+            .order('created_at', { ascending: false });
+
+        if (error) throw error;
+        return toArray(data) as Post[];
+    }
+
+
     async create(post: CreatePostInput): Promise<Post> {
         const { data, error } = await this.supabase
             .from('posts')

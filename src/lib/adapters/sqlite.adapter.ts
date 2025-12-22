@@ -200,6 +200,28 @@ class SQLitePostAdapter implements PostAdapter {
         return stmt.all(category) as Post[];
     }
 
+    async search(query: string): Promise<Post[]> {
+        if (!query || query.trim().length === 0) {
+            return [];
+        }
+
+        const searchTerm = `%${query.trim()}%`;
+        const stmt = this.db.prepare(`
+            SELECT * FROM posts 
+            WHERE published = 1 
+            AND (
+                title LIKE ? 
+                OR excerpt LIKE ? 
+                OR content LIKE ? 
+                OR category LIKE ?
+            )
+            ORDER BY created_at DESC
+        `);
+
+        return stmt.all(searchTerm, searchTerm, searchTerm, searchTerm) as Post[];
+    }
+
+
     async create(post: CreatePostInput): Promise<Post> {
         const stmt = this.db.prepare(`
       INSERT INTO posts (
