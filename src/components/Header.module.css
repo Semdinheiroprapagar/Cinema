@@ -151,6 +151,11 @@
     }
 
     .topBar {
+        justify-content: flex-end;
+        margin-bottom: var(--spacing-sm);
+    }
+
+    .socials {
         display: none;
     }
 }

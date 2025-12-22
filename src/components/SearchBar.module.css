@@ -2,18 +2,21 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(8px);
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border-radius: var(--radius-md);
-    padding: 0.5rem;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 0.6rem 0.8rem;
+    border: 1px solid rgba(255, 255, 255, 0.25);
     transition: all var(--transition-fast);
+    min-width: 250px;
 }
 
 .searchForm:focus-within {
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.2);
     border-color: var(--primary);
-    box-shadow: 0 0 0 2px rgba(255, 107, 0, 0.2);
+    box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.25);
+    transform: translateY(-1px);
 }
 
 .searchInput {
@@ -21,46 +24,54 @@
     background: transparent;
     border: none;
     outline: none;
-    color: rgba(255, 255, 255, 0.9);
-    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.95);
+    font-size: 0.95rem;
     padding: 0.25rem 0.5rem;
     min-width: 150px;
 }
 
 .searchInput::placeholder {
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.6);
 }
 
 .searchButton {
     background: transparent;
     border: none;
     cursor: pointer;
-    padding: 0.25rem;
+    padding: 0.3rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(255, 255, 255, 0.8);
     transition: all var(--transition-fast);
+    border-radius: var(--radius-sm);
 }
 
 .searchButton:hover {
     color: var(--primary);
+    background: rgba(255, 107, 0, 0.1);
     transform: scale(1.1);
 }
 
 .searchButton svg {
-    width: 20px;
-    height: 20px;
+    width: 22px;
+    height: 22px;
+    stroke-width: 2.5;
 }
 
 @media (max-width: 768px) {
+    .searchForm {
+        min-width: 200px;
+        padding: 0.5rem 0.7rem;
+    }
+
     .searchInput {
-        min-width: 100px;
-        font-size: 0.85rem;
+        min-width: 120px;
+        font-size: 0.9rem;
     }
 
     .searchButton svg {
-        width: 18px;
-        height: 18px;
+        width: 20px;
+        height: 20px;
     }
 }
