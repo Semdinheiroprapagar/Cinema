@@ -60,6 +60,8 @@
     font-size: 1.125rem;
     line-height: 1.8;
     color: var(--foreground);
+    white-space: pre-wrap;
+    word-wrap: break-word;
 }
 
 .content p {
