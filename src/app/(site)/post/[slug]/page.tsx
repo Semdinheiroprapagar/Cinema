@@ -41,7 +41,19 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     }
 
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
-    const ogImage = post.cover_image || `${baseUrl}/opengraph-image.jpg`;
+
+    // Ensure the image URL is absolute
+    let ogImage = `${baseUrl}/opengraph-image.jpg`; // Default fallback
+
+    if (post.cover_image) {
+        // If cover_image is already an absolute URL (starts with http:// or https://), use it as-is
+        if (post.cover_image.startsWith('http://') || post.cover_image.startsWith('https://')) {
+            ogImage = post.cover_image;
+        } else {
+            // If it's a relative path, prepend the base URL
+            ogImage = `${baseUrl}${post.cover_image.startsWith('/') ? '' : '/'}${post.cover_image}`;
+        }
+    }
 
     return {
         title: post.title,
@@ -52,6 +64,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
             type: 'article',
             locale: 'pt_BR',
             siteName: 'Fragmentos do Cinema',
+            url: `${baseUrl}/post/${slug}`,
             images: [
                 {
                     url: ogImage,
