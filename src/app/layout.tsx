@@ -15,17 +15,27 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Fragmentos do Cinema - Cinema e Séries",
   description: "Críticas, listas, vídeos e entrevistas de cinema e séries.",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
   openGraph: {
     title: "Fragmentos do Cinema - Cinema e Séries",
     description: "Críticas, listas, vídeos e entrevistas de cinema e séries.",
     type: "website",
     locale: "pt_BR",
     siteName: "Fragmentos do Cinema",
+    images: [
+      {
+        url: '/opengraph-image.jpg',
+        width: 1080,
+        height: 1080,
+        alt: 'Fragmentos do Cinema',
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Fragmentos do Cinema - Cinema e Séries",
     description: "Críticas, listas, vídeos e entrevistas de cinema e séries.",
+    images: ['/opengraph-image.jpg'],
   },
 };
 
