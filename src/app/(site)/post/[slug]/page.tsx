@@ -30,6 +30,46 @@ async function getPost(slug: string) {
     return post;
 }
 
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+    const { slug } = await params;
+    const post = await getPost(slug);
+
+    if (!post) {
+        return {
+            title: 'Post não encontrado',
+        };
+    }
+
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+    const ogImage = post.cover_image || `${baseUrl}/opengraph-image.jpg`;
+
+    return {
+        title: post.title,
+        description: post.excerpt || 'Fragmentos do Cinema - Cinema e Séries',
+        openGraph: {
+            title: post.title,
+            description: post.excerpt || 'Críticas, listas, vídeos e entrevistas de cinema e séries.',
+            type: 'article',
+            locale: 'pt_BR',
+            siteName: 'Fragmentos do Cinema',
+            images: [
+                {
+                    url: ogImage,
+                    width: 1200,
+                    height: 630,
+                    alt: post.title,
+                },
+            ],
+        },
+        twitter: {
+            card: 'summary_large_image',
+            title: post.title,
+            description: post.excerpt || 'Críticas, listas, vídeos e entrevistas de cinema e séries.',
+            images: [ogImage],
+        },
+    };
+}
+
 export default async function PostPage({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
     const post = await getPost(slug);
