@@ -48,7 +48,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                 <h1 className={styles.title}>{post.title}</h1>
                 {post.excerpt && <p className={styles.excerpt}>{post.excerpt}</p>}
                 <div className={styles.meta}>
-                    {post.created_at && <time>{new Date(post.created_at).toLocaleDateString()}</time>}
+                    {post.created_at && <time>{new Date(post.created_at).toLocaleDateString('pt-BR')}</time>}
                     {post.rating && post.rating > 0 && (
                         <div style={{ marginLeft: '15px' }}>
                             <StarRating value={post.rating} readOnly size="medium" />

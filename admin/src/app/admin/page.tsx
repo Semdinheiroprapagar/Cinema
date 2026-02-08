@@ -75,7 +75,7 @@ export default function AdminDashboard() {
                                         {post.published ? 'Published' : 'Draft'}
                                     </span>
                                 </td>
-                                <td>{new Date(post.created_at).toLocaleDateString()}</td>
+                                <td>{new Date(post.created_at).toLocaleDateString('pt-BR')}</td>
                                 <td className={styles.actions}>
                                     <Link href={`/admin/posts/${post.id}/edit`} className={styles.editBtn}>
                                         Edit

@@ -22,7 +22,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                 <h1 className={styles.title}>{post.title}</h1>
                 <p className={styles.excerpt}>{post.excerpt}</p>
                 <div className={styles.meta}>
-                    <time>{new Date(post.created_at).toLocaleDateString()}</time>
+                    <time>{new Date(post.created_at).toLocaleDateString('pt-BR')}</time>
                 </div>
             </header>
 

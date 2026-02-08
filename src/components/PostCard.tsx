@@ -36,7 +36,7 @@ export default function PostCard({ post }: { post: Post }) {
                         <h2 className={styles.title}>{post.title}</h2>
                     </Link>
                     {post.excerpt && <p className={styles.excerpt}>{post.excerpt}</p>}
-                    {post.created_at && <time className={styles.date}>{new Date(post.created_at).toLocaleDateString()}</time>}
+                    {post.created_at && <time className={styles.date}>{new Date(post.created_at).toLocaleDateString('pt-BR')}</time>}
                 </div>
             </article>
         );
@@ -62,7 +62,7 @@ export default function PostCard({ post }: { post: Post }) {
                     <h2 className={styles.title}>{post.title}</h2>
                 </Link>
                 {post.excerpt && <p className={styles.excerpt}>{post.excerpt}</p>}
-                {post.created_at && <time className={styles.date}>{new Date(post.created_at).toLocaleDateString()}</time>}
+                {post.created_at && <time className={styles.date}>{new Date(post.created_at).toLocaleDateString('pt-BR')}</time>}
             </div>
         </article>
     );

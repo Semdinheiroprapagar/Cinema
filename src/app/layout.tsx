@@ -16,9 +16,12 @@ export const metadata: Metadata = {
   title: "Fragmentos do Cinema - Cinema e Séries",
   description: "Críticas, listas, vídeos e entrevistas de cinema e séries.",
   icons: {
-    icon: '/favicon.png',
-    shortcut: '/favicon.png',
-    apple: '/favicon.png',
+    icon: [
+      { url: '/favicon.ico', sizes: '32x32', type: 'image/x-icon' },
+      { url: '/favicon.png', sizes: '1080x1080', type: 'image/png' },
+    ],
+    shortcut: '/favicon.ico',
+    apple: '/apple-touch-icon.png',
   },
 };
 

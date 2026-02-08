@@ -20,7 +20,7 @@ export default function SocialPost({ post }: SocialPostProps) {
                 <div className={styles.avatar}>MA</div>
                 <div className={styles.meta}>
                     <span className={styles.author}>Fragmentos do Cinema</span>
-                    {post.created_at && <span className={styles.date}>{new Date(post.created_at).toLocaleDateString()}</span>}
+                    {post.created_at && <span className={styles.date}>{new Date(post.created_at).toLocaleDateString('pt-BR')}</span>}
                 </div>
             </div>
 

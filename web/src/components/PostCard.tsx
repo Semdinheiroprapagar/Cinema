@@ -26,7 +26,7 @@ export default function PostCard({ post }: { post: Post }) {
                     <h2 className={styles.title}>{post.title}</h2>
                 </Link>
                 <p className={styles.excerpt}>{post.excerpt}</p>
-                <time className={styles.date}>{new Date(post.created_at).toLocaleDateString()}</time>
+                <time className={styles.date}>{new Date(post.created_at).toLocaleDateString('pt-BR')}</time>
             </div>
         </article>
     );
