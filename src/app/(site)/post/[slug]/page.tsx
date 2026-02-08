@@ -55,30 +55,58 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
         }
     }
 
+    const postUrl = `${baseUrl}/post/${slug}`;
+    const description = post.excerpt || 'Críticas, listas, vídeos e entrevistas de cinema e séries.';
+
     return {
         title: post.title,
-        description: post.excerpt || 'Fragmentos do Cinema - Cinema e Séries',
+        description: description,
+        // Canonical URL
+        alternates: {
+            canonical: postUrl,
+        },
+        // Open Graph metadata (Facebook, WhatsApp, LinkedIn)
         openGraph: {
             title: post.title,
-            description: post.excerpt || 'Críticas, listas, vídeos e entrevistas de cinema e séries.',
+            description: description,
             type: 'article',
             locale: 'pt_BR',
             siteName: 'Fragmentos do Cinema',
-            url: `${baseUrl}/post/${slug}`,
+            url: postUrl,
+            publishedTime: post.created_at || undefined,
+            authors: ['Fragmentos do Cinema'],
+            section: post.category || undefined,
             images: [
                 {
                     url: ogImage,
+                    secureUrl: ogImage.startsWith('https://') ? ogImage : undefined,
                     width: 1200,
                     height: 630,
                     alt: post.title,
+                    type: 'image/jpeg',
                 },
             ],
         },
+        // Twitter Card metadata
         twitter: {
             card: 'summary_large_image',
+            site: '@fragmentoscinema',
+            creator: '@fragmentoscinema',
             title: post.title,
-            description: post.excerpt || 'Críticas, listas, vídeos e entrevistas de cinema e séries.',
-            images: [ogImage],
+            description: description,
+            images: {
+                url: ogImage,
+                alt: post.title,
+            },
+        },
+        // Additional metadata for better SEO
+        robots: {
+            index: post.published ? true : false,
+            follow: true,
+            googleBot: {
+                index: post.published ? true : false,
+                follow: true,
+            },
         },
     };
 }
